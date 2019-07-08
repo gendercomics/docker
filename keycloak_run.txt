@@ -1,0 +1,1 @@
+docker run -p 9090:8080 -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=LasVegas0912# -e DB_VENDOR=H2 --name keycloak jboss/keycloak

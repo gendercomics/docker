@@ -1,0 +1,105 @@
+version: '3'
+
+services:
+
+  portainer:
+    image: portainer/portainer
+    environment:
+      - HOST
+    container_name: portainer
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    labels:
+      - traefik.frontend.rule=Host:portainer.${HOST}
+      - traefik.port=9000
+    networks:
+      - proxy
+
+  traefik:
+    image: traefik:latest
+    environment:
+      - HOST
+    container_name: traefik
+    command: --docker --docker.domain=docker.${HOST}
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik_${HOST}.toml:/traefik.toml
+      - ./acme.json:/acme.json
+    labels:
+      - traefik.frontend.rule=Host:traefik.${HOST}
+      - traefik.port=8080
+    restart: always
+
+  httpd:
+    image: httpd:2.4
+    environment:
+      - HOST
+    hostname: gendercomics-httpd-2.4
+    container_name: httpd-2.4
+    labels:
+      - traefik.frontend.rule=Host:${HOST}
+      - traefik.docker.network=proxy
+      - traefik.port=80
+    networks:
+      - proxy
+    volumes:
+      - ./apache2/conf:/usr/local/apache2/conf
+      - ../web:/usr/local/apache2/htdocs
+    restart: always
+
+  loris:
+    image: bdlss/loris-openjpeg-docker:latest
+    container_name: iiif-loris
+    restart: always
+    environment:
+      - HOST
+      - IMAGE_LOCATION=/usr/local/share/images
+    networks:
+      - proxy
+    volumes:
+      - ${IMAGE_LOCATION}:/usr/local/share/images
+    labels:
+      - traefik.frontend.rule=Host:iiif.${HOST}
+      - traefik.port=5004
+
+  gendercomics-api:
+    build:
+      context: ../api
+      dockerfile: Dockerfile
+    image: gendercomics/api:latest
+    container_name: gendercomics-api
+    networks:
+      - proxy
+      - database
+    labels:
+      - traefik.frontend.rule=Host:api.${HOST}
+      - traefik.port=8001
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    ports:
+      - 27017:27017
+    labels:
+      - traefik.port=27017
+
+volumes:
+  portainer_data:
+
+networks:
+  proxy:
+    external: true
+  database:
+    internal: true
