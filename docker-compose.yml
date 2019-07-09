@@ -91,7 +91,6 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
-      - ./mongodb/conf/mongod.conf:/etc/mongod.conf
       - db-data:/data/db
       - mongo-config:/data/configdb
     ports:
