@@ -95,7 +95,7 @@ services:
     ports:
       - 27017:27017
     labels:
-      - traefik.port=27017
+      - traefik.enable=false
 
 volumes:
   portainer_data:
