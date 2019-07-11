@@ -20,9 +20,9 @@ services:
 
   traefik:
     image: traefik:latest
+    container_name: traefik
     environment:
       - HOST
-    container_name: traefik
     command: --docker --docker.domain=docker.${HOST}
     ports:
       - 80:80
@@ -76,8 +76,12 @@ services:
       dockerfile: Dockerfile
     image: gendercomics/api:latest
     container_name: gendercomics-api
+    environment:
+      - HOST
     networks:
       - proxy
+    depends_on:
+      - mongodb
     labels:
       - traefik.frontend.rule=Host:api.${HOST}
       - traefik.port=8001
@@ -92,6 +96,8 @@ services:
     volumes:
       - db-data:/data/db
       - mongo-config:/data/configdb
+    networks:
+      - proxy
     ports:
       - 27017:27017
     labels:
