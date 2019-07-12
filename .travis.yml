@@ -1,7 +1,7 @@
-install: skip
-
 before_install:
-  - openssl aes-256-cbc -K $encrypted_5b7dc4d89bae_key -iv $encrypted_5b7dc4d89bae_iv -in deploy-key.enc -out ~\/.ssh/deploy-key -d
+  - openssl aes-256-cbc -K $encrypted_5b7dc4d89bae_key -iv $encrypted_5b7dc4d89bae_iv -in deploy-key.enc -out deploy-key -d
+
+install: skip
 
 addons:
   ssh_known_hosts: gendercomics.net
@@ -11,3 +11,4 @@ script:
 - chmod 600 deploy-key
 - ssh-add deploy-key
 - scp . deploy@gendercomics.net:/var/gendercomics/docker/
+
