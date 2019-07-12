@@ -71,9 +71,6 @@ services:
       - traefik.port=5004
 
   gendercomics-api:
-    build:
-      context: ../api
-      dockerfile: Dockerfile
     image: gendercomics/api:latest
     container_name: gendercomics-api
     environment:
