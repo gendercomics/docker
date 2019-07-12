@@ -8,11 +8,10 @@ addons:
   ssh_known_hosts: gendercomics.net
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_65c1486ae971_key -iv $encrypted_65c1486ae971_iv -in deploy-key.enc -out deploy-key -d
+- openssl aes-256-cbc -K $encrypted_65c1486ae971_key -iv $encrypted_65c1486ae971_iv -in deploy-key.enc -out deploy-key -d
 
 script:
-  - eval "$(ssh-agent -s)"
-  - chmod 600 deploy-key
-  - ssh-add deploy-key
-  - scp . deploy@gendercomics.net:/var/gendercomics/docker/
-
+- eval "$(ssh-agent -s)"
+- chmod 600 deploy-key
+- ssh-add deploy-key
+- scp . deploy@gendercomics.net:/var/gendercomics/docker/
