@@ -90,9 +90,11 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_DATA_DB: ${MONGO_DATA_DB}
+      MONGO_DATA_CONFIGDB: ${MONGO_DATA_CONFIGDB}
     volumes:
-      - db-data:/data/db
-      - mongo-config:/data/configdb
+      - ${MONGO_DATA_DB}:/data/db
+      - ${MONGO_DATA_CONFIGDB}:/data/configdb
     networks:
       - proxy
     ports:
