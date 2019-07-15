@@ -9,5 +9,4 @@ script:
 - eval "$(ssh-agent -s)"
 - chmod 600 deploy-key
 - ssh-add deploy-key
-- scp .* deploy@gendercomics.net:/var/gendercomics/docker/
-
+- scp -r ../docker deploy@gendercomics.net:/var/gendercomics/docker/
