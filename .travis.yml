@@ -10,5 +10,5 @@ script:
   - eval "$(ssh-agent -s)"
   - chmod 600 deploy-key
   - ssh-add deploy-key
-  - scp -r ../docker deploy@gendercomics.net:/var/gendercomics/
+  - scp -r ../docker deploy@gendercomics.net:/var/gendercomics
   - ssh deploy@gendercomics.net 'cd /var/gendercomics/docker && docker-compose up -d'
