@@ -102,19 +102,43 @@ services:
     labels:
       - traefik.enable=false
 
-  mariadb:
-    image: mariadb:latest
-    container_name: mariadb
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
-      MARIADB_DATA_DIR: ${MARIADB_DATA_DIR}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATA_DIR: ${MYSQL_DATA_DIR}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
-      - ${MARIADB_DATA_DIR}:/var/lib/mysql
+      - ${MYSQL_DATA_DIR}:/var/lib/mysql
     networks:
       - keycloak
     ports:
       - 3306:3306
+    labels:
+      - traefik.enable=false
+
+  keycloak:
+    image: jboss/keycloak:latest
+    container_name: keycloak
+    restart: always
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: mysql
+      DB_DATABASE: keycloak
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      KEYCLOAK_USER: ${KEYCLOAK_USER}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+    networks:
+      - keycloak
+    ports:
+      - 9090:8080
+    depends_on:
+      - mysql
     labels:
       - traefik.enable=false
 
