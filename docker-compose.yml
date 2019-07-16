@@ -58,7 +58,7 @@ services:
   loris:
     image: bdlss/loris-openjpeg-docker:latest
     container_name: iiif-loris
-    restart: always
+    restart: unless-stopped
     environment:
       - HOST
       - IMAGE_LOCATION=/usr/local/share/images
@@ -105,7 +105,7 @@ services:
   mysql:
     image: mysql:5.7
     container_name: mysql
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATA_DIR: ${MYSQL_DATA_DIR}
@@ -122,9 +122,9 @@ services:
       - traefik.enable=false
 
   keycloak:
-    image: jboss/keycloak:latest
+    image: jboss/keycloak:6.0.1
     container_name: keycloak
-    restart: always
+    restart: unless-stopped
     environment:
       DB_VENDOR: MYSQL
       DB_ADDR: mysql
