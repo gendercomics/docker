@@ -102,6 +102,22 @@ services:
     labels:
       - traefik.enable=false
 
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATA_DIR: ${MARIADB_DATA_DIR}
+    volumes:
+      - ${MARIADB_DATA_DIR}:/var/lib/mysql
+    networks:
+      - keycloak
+    ports:
+      - 3306:3306
+    labels:
+      - traefik.enable=false
+
 volumes:
   portainer_data:
   db-data:
@@ -110,3 +126,5 @@ volumes:
 networks:
   proxy:
     external: true
+  keycloak:
+    external: false
