@@ -13,6 +13,10 @@ defaultEntryPoints = ["http", "https"]
   [entryPoints.https]
     address = ":443"
       [entryPoints.https.tls]
+      [entryPoints.http.redirect]
+        regex = "^https://www.(.*)"
+        replacement = "https://$1"
+        permanent = true
 
 [api]
 entrypoint="dashboard"

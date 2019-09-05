@@ -1,10 +1,16 @@
 defaultEntryPoints = ["http"]
 
 [entryPoints]
+
   [entryPoints.dashboard]
     address = ":8080"
+
   [entryPoints.http]
     address = ":80"
+    [entryPoints.http.redirect]
+        regex = "^http://www.(.*)"
+        replacement = "http://$1"
+        permanent = true
 
 [api]
 entrypoint="dashboard"
