@@ -13,7 +13,7 @@ defaultEntryPoints = ["http", "https"]
   [entryPoints.https]
     address = ":443"
       [entryPoints.https.tls]
-      [entryPoints.http.redirect]
+      [entryPoints.https.redirect]
         regex = "^https://www.(.*)"
         replacement = "https://$1"
         permanent = true
