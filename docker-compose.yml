@@ -52,7 +52,7 @@ services:
       - proxy
     volumes:
       - ./apache2/conf:/usr/local/apache2/conf
-      - ../web:/usr/local/apache2/htdocs
+      - ../website/public:/usr/local/apache2/htdocs
     restart: always
 
   loris:
