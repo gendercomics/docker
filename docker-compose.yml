@@ -19,7 +19,7 @@ services:
       - proxy
 
   traefik:
-    image: traefik:latest
+    image: traefik:1.7.18
     container_name: traefik
     environment:
       - HOST
