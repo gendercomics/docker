@@ -55,20 +55,20 @@ services:
       - ../website/public:/usr/local/apache2/htdocs
     restart: always
 
-  loris:
-    image: bdlss/loris-openjpeg-docker:latest
-    container_name: iiif-loris
-    restart: unless-stopped
-    environment:
-      - HOST
-      - IMAGE_LOCATION=/usr/local/share/images
-    networks:
-      - proxy
-    volumes:
-      - ${IMAGE_LOCATION}:/usr/local/share/images
-    labels:
-      - traefik.frontend.rule=Host:iiif.${HOST}
-      - traefik.port=5004
+  #loris:
+  #  image: bdlss/loris-openjpeg-docker:latest
+  #  container_name: iiif-loris
+  #  restart: unless-stopped
+  #  environment:
+  #    - HOST
+  #    - IMAGE_LOCATION=/usr/local/share/images
+  #  networks:
+  #    - proxy
+  #  volumes:
+  #    - ${IMAGE_LOCATION}:/usr/local/share/images
+  #  labels:
+  #    - traefik.frontend.rule=Host:iiif.${HOST}
+  #    - traefik.port=5004
 
   gendercomics-api:
     image: gendercomics/api:latest
@@ -84,7 +84,7 @@ services:
       - traefik.port=8001
 
   mongodb:
-    image: mongo:latest
+    image: mongo:4.2.1
     container_name: mongodb
     restart: always
     environment:
