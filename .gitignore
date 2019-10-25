@@ -1,3 +1,4 @@
-deploy-key
-docker.iml
 .idea
+*.iml
+deploy-key
+/.env

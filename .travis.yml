@@ -1,0 +1,17 @@
+install: skip
+
+before_install:
+  - openssl aes-256-cbc -K $encrypted_5b7dc4d89bae_key -iv $encrypted_5b7dc4d89bae_iv -in deploy-key.enc -out deploy-key -d
+
+addons:
+  ssh_known_hosts: gendercomics.net
+
+script:
+  - eval "$(ssh-agent -s)"
+  - chmod 600 deploy-key
+  - ssh-add deploy-key
+  - scp -r ../docker deploy@gendercomics.net:/var/gendercomics
+  - ssh deploy@gendercomics.net 'cd /var/gendercomics/docker && docker-compose up -d --remove-orphans'
+
+notifications:
+  slack: visualitiesofgender:3zAI6z6JJXLeEIaBU49O0Wkr

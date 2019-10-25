@@ -3,7 +3,7 @@ version: '3'
 services:
 
   portainer:
-    image: portainer/portainer
+    image: portainer/portainer:1.22.1
     environment:
       - HOST
     container_name: portainer
@@ -19,10 +19,10 @@ services:
       - proxy
 
   traefik:
-    image: traefik:latest
+    image: traefik:1.7.18
+    container_name: traefik
     environment:
       - HOST
-    container_name: traefik
     command: --docker --docker.domain=docker.${HOST}
     ports:
       - 80:80
@@ -52,48 +52,55 @@ services:
       - proxy
     volumes:
       - ./apache2/conf:/usr/local/apache2/conf
-      - ../web:/usr/local/apache2/htdocs
+      - ../website/public:/usr/local/apache2/htdocs
     restart: always
 
-  loris:
-    image: bdlss/loris-openjpeg-docker:latest
-    container_name: iiif-loris
-    restart: always
-    environment:
-      - HOST
-      - IMAGE_LOCATION=/usr/local/share/images
-    networks:
-      - proxy
-    volumes:
-      - ${IMAGE_LOCATION}:/usr/local/share/images
-    labels:
-      - traefik.frontend.rule=Host:iiif.${HOST}
-      - traefik.port=5004
+  #loris:
+  #  image: bdlss/loris-openjpeg-docker:latest
+  #  container_name: iiif-loris
+  #  restart: unless-stopped
+  #  environment:
+  #    - HOST
+  #    - IMAGE_LOCATION=/usr/local/share/images
+  #  networks:
+  #    - proxy
+  #  volumes:
+  #    - ${IMAGE_LOCATION}:/usr/local/share/images
+  #  labels:
+  #    - traefik.frontend.rule=Host:iiif.${HOST}
+  #    - traefik.port=5004
 
   gendercomics-api:
-    build:
-      context: ../api
-      dockerfile: Dockerfile
     image: gendercomics/api:latest
     container_name: gendercomics-api
+    environment:
+      - HOST
     networks:
       - proxy
-      - database
+    depends_on:
+      - mongodb
     labels:
       - traefik.frontend.rule=Host:api.${HOST}
       - traefik.port=8001
 
   mongodb:
-    image: mongo:latest
+    image: mongo:4.2.1
     container_name: mongodb
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_DATA_DB: ${MONGO_DATA_DB}
+      MONGO_DATA_CONFIGDB: ${MONGO_DATA_CONFIGDB}
+    volumes:
+      - ${MONGO_DATA_DB}:/data/db
+      - ${MONGO_DATA_CONFIGDB}:/data/configdb
+    networks:
+      - proxy
     ports:
       - 27017:27017
     labels:
-      - traefik.port=27017
+      - traefik.enable=false
 
 volumes:
   portainer_data:
@@ -101,5 +108,5 @@ volumes:
 networks:
   proxy:
     external: true
-  database:
-    internal: true
+#  keycloak:
+#    external: false
