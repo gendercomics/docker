@@ -38,23 +38,6 @@ services:
       - traefik.port=8080
     restart: always
 
-#  httpd:
-#    image: httpd:2.4
-#    environment:
-#      - HOST
-#    hostname: gendercomics-httpd-2.4
-#    container_name: httpd-2.4
-#    labels:
-#      - traefik.frontend.rule=Host:${HOST}
-#      - traefik.docker.network=proxy
-#      - traefik.port=80
-#    networks:
-#      - proxy
-#    volumes:
-#      - ./apache2/conf:/usr/local/apache2/conf
-#      - ../website/public:/usr/local/apache2/htdocs
-#    restart: always
-
   mongodb:
     image: mongo:4.2.1
     container_name: mongodb
@@ -105,13 +88,19 @@ services:
   gendercomics-website-stage:
     image: gendercomics/website:latest
     container_name: gendercomics-website-stage
-    build:
-      context: ../website
-      dockerfile: Dockerfile
     networks:
       - proxy
     labels:
       - traefik.frontend.rule=Host:stage.${HOST}
+      - traefik.port=80
+
+  gendercomics-website:
+    image: gendercomics/website:1.0.0
+    container_name: gendercomics-website
+    networks:
+      - proxy
+    labels:
+      - traefik.frontend.rule=Host:${HOST}
       - traefik.port=80
 
 volumes:
