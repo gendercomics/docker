@@ -57,6 +57,23 @@ services:
     labels:
       - traefik.enable=false
 
+  httpd:
+    image: httpd:2.4
+    environment:
+      - HOST
+    hostname: gendercomics-httpd-2.4
+    container_name: httpd-2.4
+    labels:
+      - traefik.frontend.rule=Host:${HOST}
+      - traefik.docker.network=proxy
+      - traefik.port=80
+    networks:
+      - proxy
+    volumes:
+      - ./apache2/conf:/usr/local/apache2/conf
+      - ../website/public:/usr/local/apache2/htdocs
+    restart: always
+
   #loris:
   #  image: bdlss/loris-openjpeg-docker:latest
   #  container_name: iiif-loris
