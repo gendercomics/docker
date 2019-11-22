@@ -93,6 +93,7 @@ services:
     labels:
       - traefik.frontend.rule=Host:stage.${HOST}
       - traefik.port=80
+      - traefik.frontend.auth.basic=gesche:$$apr1$$MAPCYH7m$$8wTgBxTOH731kXK3fo1JC/
 
   gendercomics-website:
     image: gendercomics/website:1.0.2
