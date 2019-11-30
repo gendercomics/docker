@@ -96,7 +96,7 @@ services:
       - traefik.frontend.auth.basic=gesche:$$apr1$$MAPCYH7m$$8wTgBxTOH731kXK3fo1JC/
 
   gendercomics-website:
-    image: gendercomics/website:1.0.2
+    image: gendercomics/website:1.1.0
     container_name: gendercomics-website
     networks:
       - proxy
