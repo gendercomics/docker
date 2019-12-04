@@ -3,7 +3,7 @@ version: '3'
 services:
 
   portainer:
-    image: portainer/portainer:1.22.2
+    image: portainer/portainer:1.23.0
     environment:
       - HOST
     container_name: portainer
@@ -12,6 +12,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+    ports:
+      - 9000:9000
     labels:
       - traefik.frontend.rule=Host:portainer.${HOST}
       - traefik.port=9000
