@@ -88,25 +88,6 @@ services:
       - traefik.frontend.rule=Host:api.${HOST}
       - traefik.port=8001
 
-  gendercomics-website-stage:
-    image: gendercomics/website:latest
-    container_name: gendercomics-website-stage
-    networks:
-      - proxy
-    labels:
-      - traefik.frontend.rule=Host:stage.${HOST}
-      - traefik.port=80
-      - traefik.frontend.auth.basic=gesche:$$apr1$$MAPCYH7m$$8wTgBxTOH731kXK3fo1JC/
-
-  gendercomics-website:
-    image: gendercomics/website:1.1.0
-    container_name: gendercomics-website
-    networks:
-      - proxy
-    labels:
-      - traefik.frontend.rule=Host:${HOST}
-      - traefik.port=80
-
 volumes:
   portainer_data:
 
