@@ -11,7 +11,7 @@ script:
   - chmod 600 deploy-key
   - ssh-add deploy-key
   - scp -r ../docker deploy@gendercomics.net:/var/gendercomics
-  - ssh deploy@gendercomics.net 'cd /var/gendercomics/docker && docker-compose up -d --remove-orphans'
+  - ssh deploy@gendercomics.net 'cd /var/gendercomics/docker && docker-compose up -d'
 
 notifications:
   slack: visualitiesofgender:3zAI6z6JJXLeEIaBU49O0Wkr

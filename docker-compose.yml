@@ -54,6 +54,7 @@ services:
       - ${MONGO_DATA_CONFIGDB}:/data/configdb
     networks:
       - proxy
+      - database
     ports:
       - 27017:27017
     labels:
@@ -82,6 +83,7 @@ services:
       - SPRING_PROFILES_ACTIVE=stage
     networks:
       - proxy
+      - database
     depends_on:
       - mongodb
     labels:
@@ -92,7 +94,6 @@ volumes:
   portainer_data:
 
 networks:
+  database:
   proxy:
     external: true
-#  keycloak:
-#    external: false
