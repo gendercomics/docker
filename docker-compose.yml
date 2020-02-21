@@ -79,7 +79,7 @@ services:
     container_name: gendercomics-api
     environment:
       - HOST
-    #  - SPRING_PROFILES_ACTIVE=stage
+      - SPRING_PROFILES_ACTIVE=stage
     networks:
       - proxy
       - database
