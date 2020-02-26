@@ -80,8 +80,8 @@ services:
     environment:
       - HOST
       - SPRING_PROFILES_ACTIVE=stage
-      - MONGO_USERNAME_STAGE=${MONGO_USERNAME_STAGE}
-      - MONGO_USERNAME_STAGE=${MONGO_PASSWORD_STAGE}
+      - MONGO_USERNAME=${MONGO_USERNAME_STAGE}
+      - MONGO_USERNAME=${MONGO_PASSWORD_STAGE}
     networks:
       - proxy
       - database
