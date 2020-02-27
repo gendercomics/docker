@@ -87,6 +87,8 @@ services:
       - database
     depends_on:
       - mongodb
+    ports:
+      -8001:8001
     labels:
       - traefik.frontend.rule=Host:api.${HOST}
       - traefik.port=8001
