@@ -39,26 +39,6 @@ services:
       - traefik.port=8080
     restart: always
 
-  mongodb:
-    image: mongo:4.2.1
-    container_name: mongodb
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-      MONGO_DATA_DB: ${MONGO_DATA_DB}
-      MONGO_DATA_CONFIGDB: ${MONGO_DATA_CONFIGDB}
-    volumes:
-      - ${MONGO_DATA_DB}:/data/db
-      - ${MONGO_DATA_CONFIGDB}:/data/configdb
-    networks:
-      - proxy
-      - database
-    ports:
-      - 27017:27017
-    labels:
-      - traefik.enable=false
-
   #loris:
   #  image: bdlss/loris-openjpeg-docker:latest
   #  container_name: iiif-loris
@@ -73,23 +53,6 @@ services:
   #  labels:
   #    - traefik.frontend.rule=Host:iiif.${HOST}
   #    - traefik.port=5004
-
-#  gendercomics-api:
-#    image: gendercomics/api:latest
-#    container_name: gendercomics-api
-#    environment:
-#      - HOST
-#      - SPRING_PROFILES_ACTIVE=production
-#      - MONGO_USERNAME=${MONGO_USERNAME}
-#      - MONGO_PASSWORD=${MONGO_PASSWORD}
-#    networks:
-#      - proxy
-#      - database
-#    depends_on:
-#      - mongodb
-#    labels:
-#      - traefik.frontend.rule=Host:api.${HOST}
-#      - traefik.port=8001
 
 volumes:
   portainer_data:
