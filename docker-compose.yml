@@ -2,7 +2,7 @@ version: "3"
 
 services:
   portainer:
-    image: portainer/portainer-ce:2.0.0
+    image: portainer/portainer-ce:2.1.1
     environment:
       - HOST
     container_name: portainer
@@ -21,7 +21,7 @@ services:
       - proxy
 
   traefik:
-    image: traefik:1.7.26
+    image: library/traefik:v1.7.29
     container_name: traefik
     environment:
       - HOST
