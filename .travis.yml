@@ -25,5 +25,5 @@ deploy:
 notifications:
   slack:
     rooms:
-      - visualitiesofgender:3zAI6z6JJXLeEIaBU49O0Wkr#builds
+      - visualitiesofgender:jKY1HIeRKRr0EXNtymheCEYj#builds
     on_success: change
