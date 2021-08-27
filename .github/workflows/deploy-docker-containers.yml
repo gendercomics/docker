@@ -1,6 +1,6 @@
 # copy docker-compose.yml to digitalocean and run docker-compose
 
-name: copy docker-compose.yml and run docker-compose
+name: docker-compose
 
 on: [push]
 
