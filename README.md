@@ -4,7 +4,6 @@
 
 # Configuration of Docker containers for gendercomics.net
 
----
 ## Containers
 
 - portainer-ce:2.6.3
