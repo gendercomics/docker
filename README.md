@@ -1,6 +1,6 @@
 # docker-gendercomics
 
-![docker-compose](https://github.com/gendercomics/docker/actions/workflows/deploy-docker-containers.yml/badge.svg)
+![https://github.com/gendercomics/docker/actions](https://github.com/gendercomics/docker/actions/workflows/deploy-docker-containers.yml/badge.svg)
 
 # Configuration of Docker containers for gendercomics.net
 
