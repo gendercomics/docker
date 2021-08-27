@@ -10,7 +10,6 @@ jobs:
     name: production deployment to digitalocean.com
     runs-on: ubuntu-latest
     steps:
-      steps:
       - name: check out the repo
         uses: actions/checkout@v2
 
