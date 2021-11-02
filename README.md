@@ -6,6 +6,6 @@
 
 ## Containers
 
-- portainer-ce:2.6.3
-- traefik:v1.7.30 
+- portainer-ce:2.9.2
+- traefik:v1.7.33 
 
