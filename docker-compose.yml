@@ -41,6 +41,27 @@ services:
       - traefik.docker.network=proxy
     restart: always
 
+  mongodb:
+    image: mongo:4.2.10
+    container_name: mongodb
+    restart: always
+    command: [ --auth ]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_DATA_DB: ${MONGO_DATA_DB}
+      MONGO_DATA_CONFIGDB: ${MONGO_DATA_CONFIGDB}
+    volumes:
+      - ${MONGO_DATA_DB}:/data/db
+      - ${MONGO_DATA_CONFIGDB}:/data/configdb
+    networks:
+      - proxy
+    ports:
+      - 27017:27017
+    labels:
+      - traefik.enable=false
+      - traefik.docker.network=proxy
+
   #loris:
   #  image: bdlss/loris-openjpeg-docker:latest
   #  container_name: iiif-loris
