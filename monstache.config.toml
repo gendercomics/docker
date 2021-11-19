@@ -3,8 +3,8 @@ elasticsearch-urls = ["http://elasticsearch:9200"]
 elasticsearch-max-seconds = 5
 elasticsearch-max-conns = 6
 
-direct-read-namespaces = ["gendercomics-dev.comics", "gendercomics-dev.names", "gendercomics-dev.publishers"]
-change-stream-namespaces = [""]
+direct-read-namespaces = ["gendercomics-dev.comics", "gendercomics-dev.names", "gendercomics-dev.publishers", "gendercomics-dev.roles"]
+change-stream-namespaces = ["gendercomics-dev.comics"]
 
 verbose = false
 
